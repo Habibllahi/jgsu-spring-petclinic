@@ -1,12 +1,17 @@
-mysql:
-  image: mysql:5.7
-  ports:
-    - "3306:3306"
-  environment:
-    - MYSQL_ROOT_PASSWORD=
-    - MYSQL_ALLOW_EMPTY_PASSWORD=true
-    - MYSQL_USER=petclinic
-    - MYSQL_PASSWORD=petclinic
-    - MYSQL_DATABASE=petclinic
-  volumes:
-    - "./conf.d:/etc/mysql/conf.d:ro"
+version: "2.13"
+
+services:
+  pet_clinic:
+    container_name: pet-clinic
+    image: javabeanstack/pet_clinic:v1
+    restart: on-failure
+    ports:
+      - 8083:8082
+    volumes:
+      - type: volume
+        source: pet_clinic_volume
+        target: /usr/pet_clinic_volume
+        volume:
+          nocopy: true
+volumes:
+  pet_clinic_volume:
